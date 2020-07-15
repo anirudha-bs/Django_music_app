@@ -4,7 +4,8 @@ Music app
 This a music web app built with django which has several features like - 
 
 * Create playlist/album
-* Add songs individually or to albums
+* Add songs in the add songs page or in the albums
+* Add songs and albums/playlists to favorites
 * Make song and albums private/public which will alter the visibility to other users
 * Move or copy songs across playlists
 
@@ -21,12 +22,9 @@ $ python manage.py runserver
 
 Dummy data is loaded in the database with accounts -
 
-* username - anirudha
-* password - anirudha
+* 1. username - anirudha and  password - anirudha
 
-
-* username - ani
-* password - ani
+* 2. username - ani and password - ani
 
 
 Admin site -
