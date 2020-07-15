@@ -1,0 +1,167 @@
+{% extends 'music/layout.html' %}
+{% block title %}All Songs{% endblock %}
+{% block songs_active %}active{% endblock %}
+
+{% block body %}
+<div class="container-fluid songs-container">
+
+    <div class="row">
+        <div class="col-sm-12">
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" {% if modifier == 'private' %}class="active"{% endif %}><a href="{% url 'music:songs' 'all' 'private' %}">Private songs</a></li>
+                <li role="presentation" {% if modifier == 'public' %}class="active"{% endif %}><a href="{% url 'music:songs' 'all' 'public' %}">Public songs</a></li>
+            </ul>
+
+            <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                <li role="presentation" {% if filter_by == 'all' %}class="active"{% endif %}><a href="{% url 'music:songs' 'all' 'private' %}">View All</a></li>
+                <li role="presentation" {% if filter_by == 'favorites' %}class="active"{% endif %}><a href="{% url 'music:songs' 'favorites' 'private' %}">Favorites</a></li>
+                <li role="presentation"><a onclick="sortTable()">Sort aplhabatically</a>></li>
+            </ul>
+
+            <script>
+                function sortTable() {
+                  var table, rows, switching, i, x, y, shouldSwitch;
+                  table = document.getElementById("songs_table");
+                  switching = true;
+                  while (switching) {
+                    switching = false;
+                    rows = table.rows;
+                    for (i = 1; i < (rows.length - 1); i++) {
+                      shouldSwitch = false;
+                      x = rows[i].getElementsByTagName("TD")[0];
+                      y = rows[i + 1].getElementsByTagName("TD")[0];
+                      if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                        shouldSwitch = true;
+                        break;
+                      }
+                    }
+                    if (shouldSwitch) {
+                      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                      switching = true;
+                    }
+                  }
+                }
+                </script>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-12">
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <table id="songs_table" class="table">
+                        <thead>
+                            <tr>
+                                <th>Song Title</th>
+                                <th>Artist</th>
+                                <th>Audio File</th>
+                                <th>Album</th>
+                                <th>Favorite</th>
+                                <th>Visibility</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for song in song_list %}
+                                <tr>
+                                    <td>{{ song.song_title }}</td>
+                                    {% if song.album.artist %}
+                                    <td>{{ song.album.artist }}</td>
+                                    {% else %}
+                                    <td> None </td>
+                                    {% endif %}
+                                    <td>
+                                        <a target="_blank" href="{{ song.audio_file.url }}">
+                                            <button type="button" class="btn btn-success btn-xs">
+                                                <span class="glyphicon glyphicon-play"></span>&nbsp; Play
+                                            </button>
+                                        </a>
+                                    </td>
+                                    {% if song.album.id %}
+                                    <td>
+                                        <a href="{% url 'music:detail' song.album.id %}">
+                                            <img src="{{ song.album.album_logo.url }}" class="img-responsive" style="width: 20px; float: left; margin-right: 10px;" />
+                                        </a>
+                                        <a href="{% url 'music:detail' song.album.id %}">{{ song.album.album_title }}</a>
+                                    </td>
+                                    {% else %}
+                                    <td> None </td>
+                                    {% endif %}
+                                    <td>
+                                        <a href="{% url 'music:favorite' song.id %}" class="{% if song.is_favorite %} glyphicon glyphicon-star {% else %} glyphicon glyphicon-star-empty {% endif %}"></a>
+                                    </td>
+                                    <td>
+                                        <ul class="nav nav-pills" style="margin-bottom: 10px;">
+                                            <li role="presentation" {% if song.song_visibility == 'private' %}class="active"{% endif %}><a href="{% url 'music:song_modify' song.id 'private' %}">Private</a></li>
+                                            <li role="presentation" {% if song.song_visibility == 'public' %}class="active"{% endif %}><a href="{% url 'music:song_modify' song.id 'public' %}">Public</a></li>
+                                        </ul>
+                                    </td>
+                                    {% if modifier == "private" %}
+                                    <td>
+                                        <form action="{% if song.album.id %} {% url 'music:delete_song' song.album.id song.id %} {% else %} {% url 'music:del_song' song.id %} {% endif %}" method="post" style="display: inline;">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="album_id" value="{{ song.id }}" />
+                                            <button type="submit" class="btn btn-default btn-sm">
+                                                <span class="glyphicon glyphicon-trash"></span>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    {% else %}
+                                    <td> None </td>
+                                    {% endif %}
+                                    <td>
+                                        <div class="dropdown">
+                                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"> Move song
+                                            <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                              <li class="dropdown-submenu">
+                                                <a class="test" tabindex="-1" href="#">Move song to album<span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    {% if albums %}
+                                                        {% for album in albums %}
+                                                            <li><a tabindex="-1" href="{% url 'music:move_song' song.id album.album_title %}">{{ album.album_title }}</a></li>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </ul>
+                                              </li>
+                                              <li class="dropdown-submenu">
+                                                <a class="test" tabindex="-1" href="#">Copy to album<span class="caret"></span></a>
+                                                <ul class="dropdown-menu">
+                                                    {% if albums %}
+                                                        {% for album in albums %}
+                                                            <li><a tabindex="-1" href="{% url 'music:copy_song' song.id album.album_title %}">{{ album.album_title }}</a></li>
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </ul>
+                                            </ul>
+                                        </div>
+                                        
+                                        <script>
+                                        $(document).ready(function(){
+                                          $('.dropdown-submenu a.test').on("click", function(e){
+                                            $(this).next('ul').toggle();
+                                            e.stopPropagation();
+                                            e.preventDefault();
+                                          });
+                                        });
+                                        </script>
+    
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}
