@@ -18,3 +18,14 @@ Download the repo
 $ cd Django_music_app
 $ python manage.py runserver
 ```
+Dummy data is loaded in the database with accounts -
+username - anirudha
+password - anirudha
+
+
+username - ani
+password - ani
+
+Admin site -
+username - anirudha
+password - anirudha
