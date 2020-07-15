@@ -21,18 +21,15 @@ $ python manage.py runserver
 
 Dummy data is loaded in the database with accounts -
 
-username - anirudha
+* username - anirudha
+* password - anirudha
 
-password - anirudha
 
-
-username - ani
-
-password - ani
+* username - ani
+* password - ani
 
 
 Admin site -
 
-username - anirudha
-
-password - anirudha
+* username - anirudha
+* password - anirudha
