@@ -9,3 +9,12 @@ This a music web app built with django which has several features like -
 * Move or copy songs across playlists
 
 ![alt text](https://github.com/anirudha-bs/Django_music_app/blob/master/index.png?raw=true)
+
+To use the music app -
+
+Download the repo
+
+```sh
+$ cd Django_music_app
+$ python manage.py runserver
+```
