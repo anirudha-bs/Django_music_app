@@ -4,8 +4,9 @@ Music app
 This a music web app built with django which has several features like - 
 
 * Create playlist/album
-* Add songs in the add songs page or in the albums
-* Add songs and albums/playlists to favorites
+* Add songs in the add songs page or directly in the album
+* Add songs and albums/playlists to favorites (Which also acts as follow button for public songs and albums)
+* Search for songs and albums
 * Make song and albums private/public which will alter the visibility to other users
 * Move or copy songs across playlists
 
