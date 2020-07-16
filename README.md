@@ -17,9 +17,10 @@ To use the music app -
 Download the repo
 
 ```sh
-$ cd Django_music_app
+$ cd Django_music_app/django_music_app
 $ python manage.py runserver
 ```
+Visit http://127.0.0.1:8000/music to start using the app
 
 Dummy data is loaded in the database with accounts -
 
