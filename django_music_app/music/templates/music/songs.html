@@ -58,23 +58,20 @@
                         <thead>
                             <tr>
                                 <th>Song Title</th>
-                                <th>Artist</th>
                                 <th>Audio File</th>
+                                {% if modifier == 'private' %}
+                                <th>Artist</th>
                                 <th>Album</th>
                                 <th>Favorite</th>
                                 <th>Visibility</th>
                                 <th>Actions</th>
+                                {% endif %}
                             </tr>
                         </thead>
                         <tbody>
                             {% for song in song_list %}
                                 <tr>
                                     <td>{{ song.song_title }}</td>
-                                    {% if song.album.artist %}
-                                    <td>{{ song.album.artist }}</td>
-                                    {% else %}
-                                    <td> None </td>
-                                    {% endif %}
                                     <td>
                                         <a target="_blank" href="{{ song.audio_file.url }}">
                                             <button type="button" class="btn btn-success btn-xs">
@@ -82,6 +79,12 @@
                                             </button>
                                         </a>
                                     </td>
+                                    {% if modifier == 'private' %}
+                                    {% if song.album.artist %}
+                                    <td>{{ song.album.artist }}</td>
+                                    {% else %}
+                                    <td> None </td>
+                                    {% endif %}
                                     {% if song.album.id %}
                                     <td>
                                         <a href="{% url 'music:detail' song.album.id %}">
@@ -152,6 +155,7 @@
                                         </script>
     
                                     </td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                         </tbody>

@@ -32,6 +32,7 @@
 
                             <a href="{% url 'music:detail' album.id %}" class="btn btn-primary btn-sm" role="button">View Details</a>
 
+                            {% if modifier == 'private' %}
                             <form action="{% url 'music:delete_album' album.id %}" method="post" style="display: inline;">
                                 {% csrf_token %}
                                 <input type="hidden" name="album_id" value="{{ album.id }}" />
@@ -48,6 +49,7 @@
                                 <li role="presentation" {% if album.album_visibility == 'private' %}class="active"{% endif %}><a href="{% url 'music:album_modify' album.id 'private' %}">Private</a></li>
                                 <li role="presentation" {% if album.album_visibility == 'public' %}class="active"{% endif %}><a href="{% url 'music:album_modify' album.id 'public' %}">Public</a></li>
                             </ul>
+                            {% endif %}
 
                         </div>
                     </div>

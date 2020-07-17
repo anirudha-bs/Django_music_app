@@ -28,7 +28,9 @@
 
             <ul class="nav nav-pills" style="margin-bottom: 10px;">
                 <li role="presentation" class="active"><a href="{% url 'music:detail' album.id %}">View All</a></li>
+                {% if user != 'public_user' %}
                 <li role="presentation"><a href="{% url 'music:create_song' album.id %}">Add New Song</a></li>
+                {% endif %}
                 <li role="presentation"><a onclick="sortTable()">Sort aplhabatically</a>></li>
             </ul>
 
@@ -72,8 +74,10 @@
                         <tr>
                             <th>Title</th>
                             <th>Audio File</th>
+                            {% if user != 'public_user' %}
                             <th>Favorite</th>
                             <th>Actions</th>
+                            {% endif %}
                         </tr>
                         </thead>
                         <tbody>
@@ -87,6 +91,7 @@
                                         </button>
                                     </a>
                                 </td>
+                                {% if user != 'public_user' %}
                                 <td>
                                     <a href="{% url 'music:favorite' song.id %}" class="{% if song.is_favorite %} glyphicon glyphicon-star {% else %} glyphicon glyphicon-star-empty {% endif %}"></a>
                                 </td>
@@ -137,6 +142,7 @@
                                     </script>
 
                                 </td>
+                                {% endif %}
                             </tr>
                         {% endfor %}
                         </tbody>

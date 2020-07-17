@@ -7,6 +7,7 @@ from django.urls import reverse
 from .models import Album, Song
 from .forms import AlbumForm, SongForm, UserForm
 
+
 AUDIO_FILE_TYPES = ['wav', 'mp3']
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
@@ -95,8 +96,14 @@ def detail(request, album_id):
     else:
         user = request.user
         albums = Album.objects.filter(user=request.user)
-        album = get_object_or_404(albums, pk=album_id)
-        return render(request, 'music/detail.html', {'album': album, 'albums':albums, 'user': user})        
+        try:
+            album = get_object_or_404(albums, pk=album_id)
+            return render(request, 'music/detail.html', {'album': album, 'albums':albums, 'user': user})
+        except:
+            album = get_object_or_404(Album, pk=album_id)
+            if album.album_visibility == 'public':
+                return render(request, 'music/detail.html', {'album': album, 'albums':albums, 'user': 'public_user'})
+            return JsonResponse({'Error':'Not allowed'})       
 
 
 def songs(request, filter_by, modifier='private'):
@@ -112,7 +119,7 @@ def songs(request, filter_by, modifier='private'):
             return render(request, 'music/songs.html', {'song_list':songs, 'filter_by':filter_by, 'modifier':modifier, 'albums':album})
         else:
             songs = Song.objects.filter(song_visibility="public")
-            return render(request, 'music/songs.html', {'song_list':songs, 'filter_by':filter_by, 'modifier':modifier, 'albums':album})
+            return render(request, 'music/songs.html', {'song_list':songs, 'filter_by':filter_by, 'modifier':modifier})
 
 
 def create_album(request):
@@ -148,7 +155,7 @@ def create_song(request, album_id):
         return render(request, 'music/login.html')
     else:
         form = SongForm(request.POST or None, request.FILES or None)
-        album = get_object_or_404(Album, pk=album_id)
+        album = get_object_or_404(Album.objects.filter(user=request.user), pk=album_id)
         if form.is_valid():
             albums_songs = album.song_set.all()
             for s in albums_songs:
@@ -213,8 +220,8 @@ def favorite(request, song_id):
     if not request.user.is_authenticated:
         return render(request, 'music/login.html')
     else:
-        song = get_object_or_404(Song.objects.filter(user=request.user), pk=song_id)
         try:
+            song = get_object_or_404(Song.objects.filter(user=request.user), pk=song_id)
             if song.is_favorite:
                 song.is_favorite = False
             else:
@@ -264,7 +271,7 @@ def song_modify(request, song_id, modifier):
         song.song_visibility = modifier
         song.save()
         albums = Album.objects.filter(user=request.user)
-        return HttpResponseRedirect(reverse('music:songs',args=('all','private',albums,)))
+        return HttpResponseRedirect(reverse('music:songs',args=('all','private',)))
 
 
 def move_song(request, song_id, album_title):
