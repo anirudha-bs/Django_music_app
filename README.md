@@ -1,7 +1,7 @@
-# Django_music_app
+# Django_music_PWA
 Music app
 
-This a music web app built with django which has several features like - 
+This a music PWA built with django which has several features like - 
 
 * Create playlist/album
 * Add songs in the add songs page or directly in the album
@@ -29,7 +29,7 @@ Dummy data is loaded in the database with accounts -
 * 2. username - ani and password - ani
 
 
-Admin site -
+This app can be tried out on - 
 
-* username - anirudha
-* password - anirudha
+https://django-music-pwa.herokuapp.com
+
