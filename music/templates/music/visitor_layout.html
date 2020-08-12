@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'music/style.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{% static 'music/install.js' %}"></script>
 </head>
 
 <body>
@@ -31,6 +32,11 @@
             <ul class="nav navbar-nav">
                 <li class="{% block login_active %}{% endblock %}"><a href="{% url 'music:login_user' %}">Log In</a></li>
                 <li class="{% block register_active %}{% endblock %}"><a href="{% url 'music:register' %}">Register</a></li>
+                <li> 
+                    <a class="nav-link" id="installButton" href="#" hidden>
+                        <span class="glyphicon glyphicon-download" aria-hidden="true"></span>&nbsp; Install
+                    </a> 
+                </li>
             </ul>
         </div>
 
