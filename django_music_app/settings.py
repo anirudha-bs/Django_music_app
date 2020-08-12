@@ -25,13 +25,14 @@ SECRET_KEY = 'w2wew_!g!&30g1xhl46u^@6n66r2=ua6ir@a$)c7=w8m^uzf3x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1','.herokuapp.com','.ngrok.io']
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'music.apps.MusicConfig',
+    'pwa',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -122,3 +123,15 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_ROOT = os.path.join(BASE_DIR + "/music/", 'static')
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
+
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'music/static/music', 'serviceworker.js')
+
+PWA_APP_NAME = 'My music'
+PWA_APP_DESCRIPTION = "Django music PWA"
+PWA_APP_THEME_COLOR = '#000000'
+PWA_APP_ICONS = [
+    {
+        'src': '/static/music/logo-192.png',
+        'sizes': '192x192'
+    }
+]

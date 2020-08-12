@@ -20,7 +20,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^music/',include('music.urls',namespace='music')),
+    url(r'',include('music.urls',namespace='music')),
+    url('', include('pwa.urls')),
 ]
 
 if settings.DEBUG:
