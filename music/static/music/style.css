@@ -145,3 +145,9 @@ body, html {
 .thumbnail:hover{transform: scale(1.10);transition: .2s;}
 .thumbnail{transition:.2s;margin-top:20px;}
 }
+
+@media (max-width: 1000px){
+    .container-fluid{
+        height: 40%;
+    }
+}
