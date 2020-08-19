@@ -31,7 +31,7 @@
                 {% if user != 'public_user' %}
                 <li role="presentation"><a href="{% url 'music:create_song' album.id %}">Add New Song</a></li>
                 {% endif %}
-                <li role="presentation"><a onclick="sortTable()">Sort aplhabatically</a></li>
+                <li role="presentation"><a href="#" onclick="sortTable()">Sort aplhabatically</a></li>
             </ul>
 
             <script>
@@ -69,7 +69,7 @@
                         <p><strong>{{ error_message }}</strong></p>
                     {% endif %}
 
-                    <table id="songs_table" class="table">
+                    <table id="songs_table" class="table" style="width: 100%; table-layout: fixed;">
                         <thead>
                         <tr>
                             <th>Title</th>

@@ -16,7 +16,7 @@
             <ul class="nav nav-pills" style="margin-bottom: 10px;">
                 <li role="presentation" {% if filter_by == 'all' %}class="active"{% endif %}><a href="{% url 'music:songs' 'all' 'private' %}">View All</a></li>
                 <li role="presentation" {% if filter_by == 'favorites' %}class="active"{% endif %}><a href="{% url 'music:songs' 'favorites' 'private' %}">Favorites</a></li>
-                <li role="presentation"><a onclick="sortTable()">Sort aplhabatically</a>></li>
+                <li role="presentation"><a href="#" onclick="sortTable()">Sort aplhabatically</a></li>
             </ul>
 
             <script>
@@ -54,17 +54,17 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <table id="songs_table" class="table">
+                    <table id="songs_table" class="table" style="width: 100%; table-layout: fixed;">
                         <thead>
                             <tr>
                                 <th>Song Title</th>
                                 <th>Audio File</th>
                                 {% if modifier == 'private' %}
-                                <th>Artist</th>
                                 <th>Album</th>
                                 <th>Favorite</th>
                                 <th>Visibility</th>
                                 <th>Actions</th>
+                                <th>Move song</th>
                                 {% endif %}
                             </tr>
                         </thead>
@@ -80,11 +80,6 @@
                                         </a>
                                     </td>
                                     {% if modifier == 'private' %}
-                                    {% if song.album.artist %}
-                                    <td>{{ song.album.artist }}</td>
-                                    {% else %}
-                                    <td> None </td>
-                                    {% endif %}
                                     {% if song.album.id %}
                                     <td>
                                         <a href="{% url 'music:detail' song.album.id %}">
