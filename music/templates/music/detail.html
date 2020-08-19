@@ -61,6 +61,7 @@
                 
 
             <div class="panel panel-default">
+                <div class="table-responsive">
                 <div class="panel-body">
 
                     <h3>All Songs</h3>
@@ -69,7 +70,7 @@
                         <p><strong>{{ error_message }}</strong></p>
                     {% endif %}
 
-                    <table id="songs_table" class="table" style="width: 100%; table-layout: fixed;">
+                    <table id="songs_table" class="table">
                         <thead>
                         <tr>
                             <th>Title</th>
@@ -94,7 +95,9 @@
                                 </td>
                                 {% if user != 'public_user' %}
                                 <td>
+                                    <center>
                                     <a href="{% url 'music:favorite' song.id %}" class="{% if song.is_favorite %} glyphicon glyphicon-star {% else %} glyphicon glyphicon-star-empty {% endif %}"></a>
+                                    </center>
                                 </td>
                                 <td>
                                     <form action="{% url 'music:delete_song' album.id song.id %}" method="post" style="display: inline;">
@@ -149,6 +152,7 @@
                         </tbody>
                     </table>
 
+                </div>
                 </div>
             </div>
 

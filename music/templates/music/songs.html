@@ -54,7 +54,8 @@
 
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <table id="songs_table" class="table" style="width: 100%; table-layout: fixed;">
+                    <div class="table-responsive">
+                    <table id="songs_table" class="table">
                         <thead>
                             <tr>
                                 <th>Song Title</th>
@@ -91,7 +92,9 @@
                                     <td> None </td>
                                     {% endif %}
                                     <td>
+                                        <center>
                                         <a href="{% url 'music:favorite' song.id %}" class="{% if song.is_favorite %} glyphicon glyphicon-star {% else %} glyphicon glyphicon-star-empty {% endif %}"></a>
+                                        </center>
                                     </td>
                                     <td>
                                         <ul class="nav nav-pills" style="margin-bottom: 10px;">
@@ -155,6 +158,7 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
 
