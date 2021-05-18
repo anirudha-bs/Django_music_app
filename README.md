@@ -29,7 +29,7 @@ Dummy data is loaded in the database with accounts -
 * 2. username - ani and password - ani
 
 
-This app can be tried out on - 
+This app is hosted on heroku and its live- 
 
 https://django-music-pwa.herokuapp.com
 
